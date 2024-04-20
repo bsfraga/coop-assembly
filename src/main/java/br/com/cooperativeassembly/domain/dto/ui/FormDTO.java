@@ -1,19 +1,17 @@
 package br.com.cooperativeassembly.domain.dto.ui;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Builder;
-import lombok.Data;
-import lombok.With;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
-@Data
-@Builder
-@With
+@Getter
+@Setter
+@SuperBuilder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class FormDTO {
-    private String tipo;
-    private String titulo;
+@EqualsAndHashCode(callSuper = true)
+public class FormDTO extends ScreenDTO {
     private List<FormItem> itens;
     private FormButton botaoOk;
     private FormButton botaoCancelar;

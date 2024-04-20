@@ -47,7 +47,6 @@ public class FormUIService {
                 .valor("01/01/2000")
                 .build();
 
-        // Construir botões do formulário
         FormButton actionButton = FormButton.builder()
                 .texto("Ação 1")
                 .url("http://seudominio.com/ACAO1")
