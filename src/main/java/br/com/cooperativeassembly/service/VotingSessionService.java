@@ -13,6 +13,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+import java.util.Optional;
+
 @AllArgsConstructor
 @Service
 public class VotingSessionService {
@@ -22,11 +24,12 @@ public class VotingSessionService {
     private final AgendaRepository agendaRepository;
 
     public Mono<VotingSessionDTO> openSession(String agendaId, CreateVotingSessionRequest request) {
+        long duration = (request == null || request.getDuration() <= 0) ? 60L : request.getDuration();
         return agendaRepository.findById(agendaId)
                 .flatMap(agenda -> sessionRepository.save(VotingSession.builder()
                         .agendaId(agendaId)
                         .startTime(System.currentTimeMillis())
-                        .duration(request.getDuration())
+                        .duration(duration)
                         .build()))
                 .flatMap(this::convertToDTO);
     }

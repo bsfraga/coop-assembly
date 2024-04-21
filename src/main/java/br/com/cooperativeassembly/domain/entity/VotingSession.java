@@ -23,7 +23,8 @@ public class VotingSession implements Serializable {
     private String id;
     private String agendaId;
     private long startTime;
-    private long duration;
+    @Builder.Default
+    private long duration = 60;
     @Builder.Default
     private VotingStatus status = VotingStatus.OPEN;
 }
