@@ -1,10 +1,10 @@
 package br.com.cooperativeassembly.service;
 
 import br.com.cooperativeassembly.domain.dto.VoteDTO;
-import br.com.cooperativeassembly.domain.dto.VotingResultDTO;
 import br.com.cooperativeassembly.domain.entity.Vote;
 import br.com.cooperativeassembly.domain.enums.VotingStatus;
 import br.com.cooperativeassembly.domain.request.CastVoteRequest;
+import br.com.cooperativeassembly.exception.vote.VoteRegistrationException;
 import br.com.cooperativeassembly.exception.vote.VotingSessionClosedException;
 import br.com.cooperativeassembly.exception.votingsession.VotingSessionNotFoundException;
 import br.com.cooperativeassembly.integration.service.MemberService;
@@ -36,11 +36,18 @@ public class VoteService {
                     if (VotingStatus.CLOSED.equals(session.getStatus())) {
                         return Mono.error(new VotingSessionClosedException("Voting session is closed"));
                     }
-                    return voteRepository.save(Vote.builder()
-                            .sessionId(sessionId)
-                            .memberId(request.getMemberId())
-                            .decision(request.isDecision())
-                            .build());
+                    return voteRepository.findBySessionIdAndMemberId(sessionId, request.getMemberId())
+                            .hasElement()
+                            .flatMap(exists -> {
+                                if (Boolean.TRUE.equals(exists)) {
+                                    return Mono.error(new VoteRegistrationException("Member has already voted in this session"));
+                                }
+                                return voteRepository.save(Vote.builder()
+                                        .sessionId(sessionId)
+                                        .memberId(request.getMemberId())
+                                        .decision(request.getDecision())
+                                        .build());
+                            });
                 })
                 .map(this::convertToDTO)
                 .switchIfEmpty(Mono.error(new VotingSessionNotFoundException("Voting session not found with ID: " + sessionId)));
