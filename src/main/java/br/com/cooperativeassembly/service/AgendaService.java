@@ -3,11 +3,10 @@ package br.com.cooperativeassembly.service;
 import br.com.cooperativeassembly.domain.dto.AgendaDTO;
 import br.com.cooperativeassembly.domain.entity.Agenda;
 import br.com.cooperativeassembly.domain.request.CreateAgendaRequest;
-import br.com.cooperativeassembly.repository.AgendaRepository;
 import br.com.cooperativeassembly.exception.agenda.AgendaCreationException;
 import br.com.cooperativeassembly.exception.agenda.AgendaNotFoundException;
+import br.com.cooperativeassembly.repository.AgendaRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -25,6 +24,12 @@ public class AgendaService {
         return agendaRepository.save(agenda)
                 .map(this::convertToDTO)
                 .onErrorResume(e -> Mono.error(new AgendaCreationException("Failed to save agenda", e)));
+    }
+
+    public Mono<AgendaDTO> getAgendaById(String id) {
+        return agendaRepository.findById(id)
+                .map(this::convertToDTO)
+                .switchIfEmpty(Mono.error(new AgendaNotFoundException("Agenda not found")));
     }
 
     public Flux<AgendaDTO> getAllAgendas() {

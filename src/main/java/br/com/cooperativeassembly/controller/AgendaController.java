@@ -24,7 +24,9 @@ public class AgendaController {
     @PostMapping
     @Operation(summary = "Create an agenda")
     public Mono<ResponseEntity<AgendaDTO>> createAgenda(@RequestBody CreateAgendaRequest request) {
+        log.info("Creating agenda with request: {}", request);
         return agendaService.createAgenda(request)
+                .doOnNext(agenda -> log.info("Created agenda: {}", agenda))
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.badRequest().build());
     }
@@ -32,6 +34,19 @@ public class AgendaController {
     @GetMapping
     @Operation(summary = "Get all agendas")
     public Flux<AgendaDTO> getAllAgendas() {
-        return agendaService.getAllAgendas();
+        log.info("Getting all agendas");
+        return agendaService.getAllAgendas()
+                .doOnNext(agenda -> log.info("Retrieved agenda: {}", agenda));
     }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Get an agenda by id")
+    public Mono<ResponseEntity<AgendaDTO>> getAgendaById(@PathVariable String id) {
+        log.info("Getting agenda with id: {}", id);
+        return agendaService.getAgendaById(id)
+                .doOnNext(agenda -> log.info("Retrieved agenda: {}", agenda))
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
+
 }

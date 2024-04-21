@@ -31,7 +31,7 @@ class AgendaServiceTest {
     }
 
     @Test
-    void createAgenda_Success() {
+    void createAgendaSuccess() {
         CreateAgendaRequest request = CreateAgendaRequest.builder()
                 .description("Test Agenda")
                 .build();
@@ -49,7 +49,7 @@ class AgendaServiceTest {
     }
 
     @Test
-    void createAgenda_Failure() {
+    void createAgendaFailure() {
         CreateAgendaRequest request = CreateAgendaRequest.builder()
                 .description("Test Agenda")
                 .build();
@@ -62,7 +62,7 @@ class AgendaServiceTest {
     }
 
     @Test
-    void getAllAgendas_Success() {
+    void getAllAgendasSuccess() {
         Agenda agenda1 = Agenda.builder()
                 .id("1")
                 .description("Test Agenda 1")
@@ -82,11 +82,26 @@ class AgendaServiceTest {
     }
 
     @Test
-    void getAllAgendas_Failure() {
+    void getAllAgendasFailure() {
         when(agendaRepository.findAll()).thenReturn(Flux.error(new AgendaNotFoundException("Failed to retrieve agendas")));
 
         StepVerifier.create(agendaService.getAllAgendas())
                 .expectError(AgendaNotFoundException.class)
                 .verify();
+    }
+
+    @Test
+    void getSpecificAgendaSuccess() {
+        String agendaId = "1";
+        Agenda agenda = Agenda.builder()
+                .id(agendaId)
+                .description("Test Agenda")
+                .build();
+
+        when(agendaRepository.findById(agendaId)).thenReturn(Mono.just(agenda));
+
+        StepVerifier.create(agendaService.getAgendaById(agendaId))
+                .expectNextMatches(agendaDTO -> agendaDTO.getId().equals(agendaId) && agendaDTO.getDescription().equals("Test Agenda"))
+                .verifyComplete();
     }
 }
