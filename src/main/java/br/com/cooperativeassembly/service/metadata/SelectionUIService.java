@@ -10,6 +10,8 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.Map;
 
+import static br.com.cooperativeassembly.domain.enums.ScreenType.SELECAO;
+
 @Service
 @Slf4j
 @AllArgsConstructor
@@ -41,7 +43,7 @@ public class SelectionUIService {
         List<FormButton> itens = List.of(item1, item2, item3, item4);
 
         SelectionDTO selection = SelectionDTO.builder()
-                .tipo("SELECAO")
+                .tipo(SELECAO.name())
                 .titulo("Lista de seleção")
                 .itens(itens)
                 .build();

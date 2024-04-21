@@ -8,7 +8,7 @@ import lombok.With;
 @Builder
 @With
 public class CastVoteRequest {
-    private String sessionId;
+//    private String sessionId;
     private String memberId;
     private boolean decision;
 }

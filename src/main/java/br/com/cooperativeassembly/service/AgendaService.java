@@ -4,6 +4,8 @@ import br.com.cooperativeassembly.domain.dto.AgendaDTO;
 import br.com.cooperativeassembly.domain.entity.Agenda;
 import br.com.cooperativeassembly.domain.request.CreateAgendaRequest;
 import br.com.cooperativeassembly.repository.AgendaRepository;
+import br.com.cooperativeassembly.exception.agenda.AgendaCreationException;
+import br.com.cooperativeassembly.exception.agenda.AgendaNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -22,13 +24,13 @@ public class AgendaService {
                 .build();
         return agendaRepository.save(agenda)
                 .map(this::convertToDTO)
-                .onErrorResume(e -> Mono.error(new RuntimeException("Failed to save agenda", e)));
+                .onErrorResume(e -> Mono.error(new AgendaCreationException("Failed to save agenda", e)));
     }
 
     public Flux<AgendaDTO> getAllAgendas() {
         return agendaRepository.findAll()
                 .map(this::convertToDTO)
-                .onErrorResume(e -> Mono.error(new RuntimeException("Failed to retrieve agendas", e)));
+                .onErrorResume(e -> Mono.error(new AgendaNotFoundException("Failed to retrieve agendas", e)));
     }
 
     private AgendaDTO convertToDTO(Agenda agenda) {

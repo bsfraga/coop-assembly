@@ -1,5 +1,6 @@
 package br.com.cooperativeassembly.domain.entity;
 
+import br.com.cooperativeassembly.domain.enums.VotingStatus;
 import lombok.Builder;
 import lombok.Data;
 import lombok.With;
@@ -23,4 +24,6 @@ public class VotingSession implements Serializable {
     private String agendaId;
     private long startTime;
     private long duration;
+    @Builder.Default
+    private VotingStatus status = VotingStatus.OPEN;
 }

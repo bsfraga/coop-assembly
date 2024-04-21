@@ -11,6 +11,5 @@ import java.util.List;
 
 @Repository
 public interface VoteRepository extends ReactiveMongoRepository<Vote, String> {
-
-    Flux<Vote> findBySessionId(String sessionId);
+    Flux<Vote> findAllBySessionId(String sessionId);
 }
