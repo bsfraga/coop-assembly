@@ -29,8 +29,6 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Grant execute permission for gradlew
-      run: chmod +x ./gradlew
 
   build:
     name: Build Project
@@ -38,6 +36,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Grant execute permission for gradlew
+      run: chmod +x ./gradlew
     - name: Build with Gradle
       run: ./gradlew build
       env:
@@ -49,6 +49,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Grant execute permission for gradlew
+      run: chmod +x ./gradlew
     - name: Test with Gradle
       run: ./gradlew test
       env:
