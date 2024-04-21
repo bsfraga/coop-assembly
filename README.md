@@ -1,5 +1,5 @@
-# README para o Projeto Cooperative Assembly
-
+# Projeto Cooperative Assembly
+[![Java CI with Gradle](https://github.com/bsfraga/coop-assembly/actions/workflows/gradle.yml/badge.svg)](https://github.com/bsfraga/coop-assembly/actions/workflows/gradle.yml)
 ## Descrição do Projeto
 
 Este projeto é uma aplicação Spring Boot desenvolvida para gerenciar votações em uma cooperativa. Permite aos membros da cooperativa criar sessões de votação, votar e acompanhar os resultados das votações em tempo real.
