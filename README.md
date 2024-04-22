@@ -17,6 +17,8 @@ Este projeto é uma aplicação Spring Boot desenvolvida para gerenciar votaçõ
   - Spring Boot
   - Lombok
   - MongoDB (para persistência de dados)
+  - Spring WebFlux (para programação reativa)
+  - Swagger (para documentação da API)
 
 ## Como Executar (Sem Docker)
 
@@ -35,3 +37,19 @@ Este projeto é uma aplicação Spring Boot desenvolvida para gerenciar votaçõ
    - Execute `docker-compose up` para iniciar os containers.
 
 Lembre-se de substituir `URL_DO_PROJETO`, `caminho_para_o_projeto`, `nome_do_arquivo.jar` e `nome-da-imagem` pelos valores correspondentes ao seu projeto.
+
+## Documentação da API
+
+A documentação da API está disponível através do Swagger UI, acessível em `/v1/api/swagger-ui/index.html` após iniciar a aplicação.
+
+## Testes
+
+Os testes unitários e de integração foram implementados utilizando o Spring Boot Test e o Spring Data Test.
+
+Para executar os testes, utilize o comando `./gradlew test`.
+
+## Observaçes
+
+Este projeto foi desenvolvido com base nos princípios do SOLID e do DDD, e segue o padrão de projeto CQRS (Command Query Responsibility Segregation).
+
+
