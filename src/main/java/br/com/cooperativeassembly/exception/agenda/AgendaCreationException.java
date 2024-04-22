@@ -1,15 +1,17 @@
 package br.com.cooperativeassembly.exception.agenda;
 
-import lombok.AllArgsConstructor;
+import org.springframework.web.server.ResponseStatusException;
 
-public class AgendaCreationException extends RuntimeException {
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+
+public class AgendaCreationException extends ResponseStatusException {
 
     public AgendaCreationException(String message) {
-        super(message);
+        super(BAD_REQUEST, message);
     }
 
     public AgendaCreationException(String message, Throwable cause) {
-        super(message, cause);
+        super(BAD_REQUEST, message, cause);
     }
 
 }
