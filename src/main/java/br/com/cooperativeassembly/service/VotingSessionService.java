@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-import java.util.Optional;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Service
@@ -24,14 +24,15 @@ public class VotingSessionService {
     private final AgendaRepository agendaRepository;
 
     public Mono<VotingSessionDTO> openSession(String agendaId, CreateVotingSessionRequest request) {
-        long duration = (request == null || request.getDuration() <= 0) ? 60L : request.getDuration();
+        long duration = (request == null || request.getDuration() <= 0) ? 1L : request.getDuration();
         return agendaRepository.findById(agendaId)
                 .flatMap(agenda -> sessionRepository.save(VotingSession.builder()
                         .agendaId(agendaId)
-                        .startTime(System.currentTimeMillis())
+                        .startTime(LocalDateTime.now())
                         .duration(duration)
                         .build()))
-                .flatMap(this::convertToDTO);
+                .flatMap(this::convertToDTO)
+                .switchIfEmpty(Mono.error(new VotingSessionNotFoundException("Agenda not found with ID: " + agendaId)));
     }
 
     public Mono<VotingResultDTO> getVotingResult(String sessionId) {
