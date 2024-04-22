@@ -3,16 +3,16 @@ package br.com.cooperativeassembly.domain.enums;
 public enum ButtonAction {
 
     SUBMIT("Submit"),
-    CANCEL("Cancel");
+    CANCEL("Cancelar");
 
-    private final String action;
+    private final String description;
 
-    ButtonAction(String action) {
-        this.action = action;
+    ButtonAction(String description) {
+        this.description = description;
     }
 
-    public String getAction() {
-        return action;
+    public String getDescription() {
+        return description;
     }
 
 }

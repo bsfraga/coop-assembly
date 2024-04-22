@@ -1,10 +1,7 @@
 package br.com.cooperativeassembly.domain.dto.ui;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
@@ -14,6 +11,8 @@ import java.util.List;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@NoArgsConstructor
+@AllArgsConstructor
 public class SelectionDTO extends ScreenDTO{
 
     private List<FormButton> itens;
