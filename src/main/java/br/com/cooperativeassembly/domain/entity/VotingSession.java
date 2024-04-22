@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Document
 @Data
@@ -22,9 +23,9 @@ public class VotingSession implements Serializable {
     @Id
     private String id;
     private String agendaId;
-    private long startTime;
+    private LocalDateTime startTime;
     @Builder.Default
-    private long duration = 60;
+    private long duration = 1;
     @Builder.Default
     private VotingStatus status = VotingStatus.OPEN;
 }

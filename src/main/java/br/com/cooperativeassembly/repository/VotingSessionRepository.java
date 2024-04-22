@@ -7,11 +7,13 @@ import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 
+import java.time.LocalDateTime;
+
 
 @Repository
 public interface VotingSessionRepository extends ReactiveMongoRepository<VotingSession, String> {
 
-    @Query("{ 'status': 'OPEN', 'startTime': { $lt: ?0 } }")
-    Flux<VotingSession> findSessionsToClose(Long currentTime);
+    @Query("{ 'startTime' : { $lt: ?0 }, 'status' : 'OPEN' }")
+    Flux<VotingSession> findSessionsToClose(LocalDateTime now);
 
 }

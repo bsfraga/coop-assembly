@@ -1,9 +1,12 @@
 package br.com.cooperativeassembly.exception.votingsession;
 
-public class VotingSessionNotFoundException extends RuntimeException {
-    
-        public VotingSessionNotFoundException(String message) {
-            super(message);
-        }
-    
+import org.springframework.web.server.ResponseStatusException;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
+public class VotingSessionNotFoundException extends ResponseStatusException {
+
+    public VotingSessionNotFoundException(String reason) {
+        super(NOT_FOUND, reason);
+    }
 }
