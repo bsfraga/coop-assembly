@@ -7,6 +7,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import reactor.core.scheduler.Schedulers;
 
+import java.time.LocalDateTime;
+
 import static br.com.cooperativeassembly.domain.enums.VotingStatus.CLOSED;
 
 @Slf4j
@@ -18,7 +20,8 @@ public class VotingSessionScheduler {
 
     @Scheduled(fixedRate = 60000)
     public void closeVotingSessions() {
-        votingSessionRepository.findSessionsToClose(System.currentTimeMillis())
+        LocalDateTime now = LocalDateTime.now();
+        votingSessionRepository.findSessionsToClose(now)
                 .flatMap(session -> {
                     session.setStatus(CLOSED);
                     return votingSessionRepository.save(session);
