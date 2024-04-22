@@ -78,7 +78,7 @@ class VoteServiceTest {
         when(memberService.isCpfValid("invalidCpf")).thenReturn(Mono.just(false));
 
         StepVerifier.create(voteService.castVote("sessionId", CastVoteRequest.builder().memberId("invalidCpf").decision(true).build()))
-                .expectError(IllegalArgumentException.class)
+                .expectError(VoteRegistrationException.class)
                 .verify();
     }
 

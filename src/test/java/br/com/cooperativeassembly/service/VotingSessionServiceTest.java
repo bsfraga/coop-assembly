@@ -17,6 +17,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -45,13 +47,13 @@ class VotingSessionServiceTest {
     void openSessionSuccess() {
         String agendaId = "agendaId";
         CreateVotingSessionRequest request = CreateVotingSessionRequest.builder()
-                .duration(60)
+                .duration(60L)
                 .build();
 
         VotingSession session = VotingSession.builder()
                 .id("sessionId")
                 .agendaId(agendaId)
-                .startTime(System.currentTimeMillis())
+                .startTime(LocalDateTime.now())
                 .duration(request.getDuration())
                 .build();
 
@@ -67,19 +69,20 @@ class VotingSessionServiceTest {
     void openSessionAgendaNotFound() {
         String agendaId = "invalidAgendaId";
         CreateVotingSessionRequest request = CreateVotingSessionRequest.builder()
-                .duration(60)
+                .duration(60L)
                 .build();
 
         when(agendaRepository.findById(agendaId)).thenReturn(Mono.empty());
 
         StepVerifier.create(votingSessionService.openSession(agendaId, request))
-                .verifyComplete();
+                .expectError(VotingSessionNotFoundException.class)
+                .verify();
     }
 
     @Test
     void testOpenSessionWithDefaultDuration() {
         String agendaId = "someAgendaId";
-        int defaultDuration = 60;
+        int defaultDuration = 1;
 
         when(agendaRepository.findById(agendaId)).thenReturn(Mono.just(Agenda.builder().id(agendaId).build()));
         when(sessionRepository.save(any(VotingSession.class))).thenAnswer(invocation -> {

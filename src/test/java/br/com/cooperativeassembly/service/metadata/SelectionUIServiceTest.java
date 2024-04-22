@@ -1,7 +1,6 @@
 package br.com.cooperativeassembly.service.metadata;
 
 import br.com.cooperativeassembly.domain.dto.ui.FormButton;
-import br.com.cooperativeassembly.domain.dto.ui.SelectionDTO;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import reactor.test.StepVerifier;
@@ -42,12 +41,6 @@ class SelectionUIServiceTest {
                 .build();
 
         List<FormButton> itens = List.of(item1, item2, item3, item4);
-
-        SelectionDTO selection = SelectionDTO.builder()
-                .tipo(SELECAO.name())
-                .titulo("Lista de seleção")
-                .itens(itens)
-                .build();
 
         StepVerifier.create(selectionUIService.getSelection())
                 .expectNextMatches(selectionDTO -> {
