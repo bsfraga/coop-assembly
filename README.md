@@ -4,6 +4,10 @@
 
 Este projeto é uma aplicação Spring Boot desenvolvida para gerenciar votações em uma cooperativa. Permite aos membros da cooperativa criar sessões de votação, votar e acompanhar os resultados das votações em tempo real.
 
+#### Observaçoes
+
+Para manter o objetivo de validar o cpf dos membros da cooperativa, foi implementado o consumo de um serviço externo que valida o CPF, porém o serviço consumido não é o mesmo sugerido no desafio tendo em vista que o serviço encontra-se fora do ar.
+
 ## Funcionalidades
 
 - **Criação de Sessões de Votação**: Permite aos usuários criar sessões de votação para diferentes pautas.
