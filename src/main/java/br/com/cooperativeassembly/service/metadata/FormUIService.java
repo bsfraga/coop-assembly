@@ -12,6 +12,7 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.Map;
 
+import static br.com.cooperativeassembly.domain.enums.ButtonAction.CANCEL;
 import static br.com.cooperativeassembly.domain.enums.FieldType.*;
 import static br.com.cooperativeassembly.domain.enums.ScreenType.FORMULARIO;
 
@@ -57,7 +58,7 @@ public class FormUIService {
                 .build();
 
         FormButton cancelButton = FormButton.builder()
-                .texto("Cancelar")
+                .texto(CANCEL.getDescription())
                 .url("http://seudominio.com/")
                 .build();
 
