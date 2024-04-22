@@ -18,10 +18,9 @@ Para manter o objetivo de validar o cpf dos membros da cooperativa, foi implemen
 
 - **Java**: Versão 17.
 - **Dependências**:
-  - Spring Boot
+  - Spring WebFlux (para programação reativa)
   - Lombok
   - MongoDB (para persistência de dados)
-  - Spring WebFlux (para programação reativa)
   - Swagger (para documentação da API)
 
 ## Como Executar (Sem Docker)
