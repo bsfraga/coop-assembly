@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import static java.lang.Boolean.FALSE;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @Service
 @AllArgsConstructor
@@ -28,19 +29,19 @@ public class VoteService {
         return memberService.isCpfValid(request.getMemberId())
                 .flatMap(isValid -> {
                     if (FALSE.equals(isValid)) {
-                        return Mono.error(new IllegalArgumentException("Invalid CPF"));
+                        throw new VoteRegistrationException(BAD_REQUEST, "Invalid CPF");
                     }
                     return sessionRepository.findById(sessionId);
                 })
                 .flatMap(session -> {
                     if (VotingStatus.CLOSED.equals(session.getStatus())) {
-                        return Mono.error(new VotingSessionClosedException("Voting session is closed"));
+                        throw new VotingSessionClosedException("Voting session is closed");
                     }
                     return voteRepository.findBySessionIdAndMemberId(sessionId, request.getMemberId())
                             .hasElement()
                             .flatMap(exists -> {
                                 if (Boolean.TRUE.equals(exists)) {
-                                    return Mono.error(new VoteRegistrationException("Member has already voted in this session"));
+                                    throw new VoteRegistrationException(BAD_REQUEST, "Member has already voted in this session");
                                 }
                                 return voteRepository.save(Vote.builder()
                                         .sessionId(sessionId)

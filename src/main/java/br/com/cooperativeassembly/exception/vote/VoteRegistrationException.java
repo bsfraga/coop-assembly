@@ -1,9 +1,11 @@
 package br.com.cooperativeassembly.exception.vote;
 
-public class VoteRegistrationException extends RuntimeException {
+import org.springframework.http.HttpStatusCode;
+import org.springframework.web.server.ResponseStatusException;
 
-    public VoteRegistrationException(String message) {
-        super(message);
+public class VoteRegistrationException extends ResponseStatusException {
+
+    public VoteRegistrationException(HttpStatusCode status, String reason) {
+        super(status, reason);
     }
-    
 }
