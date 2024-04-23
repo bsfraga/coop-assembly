@@ -21,7 +21,7 @@ RUN ./gradlew build
 FROM openjdk:17-jdk-slim
 
 # Copiar o JAR construído para o container
-COPY --from=build /app/build/libs/*.jar app.jar
+COPY --from=build /app/build/libs/*.jar /app/app.jar
 
 # Definir o comando para executar a aplicação
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-jar","/app/app.jar"]
