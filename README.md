@@ -14,6 +14,37 @@ Para manter o objetivo de validar o cpf dos membros da cooperativa, foi implemen
 - **Votação**: Os membros podem votar nas sessões de votação ativas, escolhendo entre 'Sim' ou 'Não'.
 - **Contabilização dos Votos**: Ao final de cada sessão, os votos são contabilizados e o resultado é disponibilizado.
 
+## Testes de Carga com Gatling
+
+Este projeto inclui um módulo de testes de carga utilizando o Gatling, uma ferramenta poderosa para testar o desempenho de aplicações web.
+
+### Pré-requisitos
+
+- Java 17.
+- Gatling (incluído como no projeto).
+
+### Como Executar os Testes de Carga
+
+1. **Navegue até a pasta `bin` do Gatling no projeto**: `cd caminho_para_o_projeto/gatling/bin`.
+2. **Execute o Gatling**:
+   - Para sistemas baseados em Unix/Linux/Mac: `./gatling.sh`
+   - Para sistemas Windows: `gatling.bat`
+
+Siga o fluxo do CLI do Gatling:
+- Escolha `1 Run the Simulation locally` para iniciar o teste.
+- Selecione a simulação que deseja executar, digitando o número correspondente e pressionando enter.
+- Insira uma descrição para a execução do teste, se solicitado, e pressione enter para iniciar.
+
+Os scripts de teste de carga estão localizados em `user-files/simulations` dentro da pasta do Gatling. Você pode modificar ou adicionar novos scripts conforme necessário para testar diferentes aspectos da aplicação.
+
+### Visualizando os Resultados
+
+Após a execução dos testes, os relatórios serão gerados na pasta `results` dentro da pasta do Gatling. Você pode abrir o arquivo `index.html` em um navegador para visualizar os resultados detalhados dos testes de carga.
+
+### Observações
+
+- Certifique-se de que a aplicação esteja em execução antes de iniciar os testes de carga.
+
 ## Requisitos do Projeto
 
 - **Java**: Versão 17.

@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# add gatling results folder
+/gatling/results/
+
